@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  proxy:
+    image: nginx
+    depends_on:
+      - backend
+    volumes:
+    - "./nginx.conf:/etc/nginx/nginx.conf"
+    ports:
+    - "80:80"
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "python -m nginx_custom_headers"
+    ports:
+    - "8080:80"
